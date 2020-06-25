@@ -27,7 +27,7 @@ public abstract class Expression {
     }
 
     public Expression or(Expression expression) {
-        return expression.orReversed(expression);
+        return expression.orReversed(this);
     }
 
     protected Expression xorReversed(Expression expression) {
@@ -35,7 +35,7 @@ public abstract class Expression {
     }
 
     public Expression xor(Expression expression) {
-        return expression.xor(this);
+        return expression.xorReversed(this);
     }
 
     protected Expression xorTrue(Expression expression) {
