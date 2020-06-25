@@ -20,4 +20,9 @@ public class Negation extends Expression {
         else
             return "~(" + expression + ")";
     }
+
+    @Override
+    public Expression neg() {
+        return expression;
+    }
 }
