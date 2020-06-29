@@ -20,6 +20,11 @@ public class True extends Expression {
     }
 
     @Override
+    public boolean isTautology() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "T";
     }

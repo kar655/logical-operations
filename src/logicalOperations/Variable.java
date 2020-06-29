@@ -10,6 +10,7 @@ public class Variable extends Expression {
 
     private Variable(String name) {
         this.name = name;
+        usedVariables.add(name);
     }
 
     public static Variable give(String name) {
@@ -34,6 +35,11 @@ public class Variable extends Expression {
             throw new VariableNoValue();
 
         return values.get(name);
+    }
+
+    @Override
+    public boolean isTautology() {
+        return false;
     }
 
     @Override

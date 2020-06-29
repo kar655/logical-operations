@@ -1,6 +1,7 @@
 package logicalOperations;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Negation extends Expression {
 
@@ -13,6 +14,11 @@ public class Negation extends Expression {
     @Override
     public boolean evaluate(HashMap<String, Boolean> values) {
         return !expression.evaluate(values);
+    }
+
+    @Override
+    public boolean isTautology() {
+        return !expression.isTautology();
     }
 
     @Override

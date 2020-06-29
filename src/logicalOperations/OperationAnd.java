@@ -22,4 +22,9 @@ public class OperationAnd extends Operation {
     public boolean evaluate(HashMap<String, Boolean> values) {
         return left.evaluate(values) && right.evaluate(values);
     }
+
+    @Override
+    public boolean isTautology() {
+        return left.isTautology() && right.isTautology();
+    }
 }

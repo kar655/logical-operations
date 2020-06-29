@@ -1,11 +1,18 @@
 package logicalOperations;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
-public abstract class Expression {
+public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
+
+    protected HashSet<String> usedVariables = new HashSet<>();
+
 
     public abstract boolean evaluate(HashMap<String, Boolean> values)
             throws VariableNoValue;
+
+    public abstract boolean isTautology();
 
     public abstract String toString();
 
@@ -47,5 +54,10 @@ public abstract class Expression {
 
     protected Expression xorFalse(Expression expression) {
         return new OperationXor(expression, this);
+    }
+
+    @Override
+    public Iterator<HashMap<String, Boolean>> iterator() {
+        return new ExpressionIterator(usedVariables);
     }
 }

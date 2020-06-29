@@ -20,6 +20,11 @@ public class False extends Expression {
     }
 
     @Override
+    public boolean isTautology() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "F";
     }
