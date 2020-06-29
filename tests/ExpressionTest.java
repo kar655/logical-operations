@@ -8,160 +8,219 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Polecenie:
  * zaimplementuj projekt dotyczący Wyrażeń logicznych zawierający następujace klasy:
- *
+ * <p>
  * Wyrazenie
- *    public boolean wartosc(boolean... wartosciowanie_zmiennych
- *          wyliczba wartość wyrażanie, przy założeniu, że:
- *             x_0 := wartosciowanie_zmiennych[0]
- *             x_1 := wartosciowanie_zmiennych[1]
- *             ...
- *    public String toString()
- *    public Wyrazenie neg()
- *    public Wyrazenie and(Wyrazenie arg)
- *    public Wyrazenie or(Wyrazenie arg)
- *    public Wyrazenie xor(Wyrazenie arg)
+ * public boolean wartosc(boolean... wartosciowanie_zmiennych
+ * wyliczba wartość wyrażanie, przy założeniu, że:
+ * x_0 := wartosciowanie_zmiennych[0]
+ * x_1 := wartosciowanie_zmiennych[1]
+ * ...
+ * public String toString()
+ * public Wyrazenie neg()
+ * public Wyrazenie and(Wyrazenie arg)
+ * public Wyrazenie or(Wyrazenie arg)
+ * public Wyrazenie xor(Wyrazenie arg)
  * True
- *    public static True daj()
+ * public static True daj()
  * False
- *    public static False daj()
+ * public static False daj()
  * Zmienna
- *    public static Zmienna daj(int i) -> generuje zmienną x_i
+ * public static Zmienna daj(int i) -> generuje zmienną x_i
  */
 
 
 public class ExpressionTest {
 
-    private Expression x0 = Variable.give(0);
-    private Expression x1 = Variable.give(1);
-    private Expression x2 = Variable.give(2);
-    private Expression t = True.getInstance();
-    private Expression f = False.getInstance();
+    private Expression x0 = Variable.give("x0");
+    private Expression x1 = Variable.give("x1");
+    private Expression x2 = Variable.give("x2");
+    private Expression T = True.getInstance();
+    private Expression F = False.getInstance();
+
+    private HashMap<String, Boolean> e = new HashMap<>();
+    private HashMap<String, Boolean> t = new HashMap<>();
+    private HashMap<String, Boolean> f = new HashMap<>();
+    private HashMap<String, Boolean> tt = new HashMap<>();
+    private HashMap<String, Boolean> tf = new HashMap<>();
+    private HashMap<String, Boolean> ft = new HashMap<>();
+    private HashMap<String, Boolean> ff = new HashMap<>();
+    private HashMap<String, Boolean> ttt = new HashMap<>();
+    private HashMap<String, Boolean> ttf = new HashMap<>();
+    private HashMap<String, Boolean> tft = new HashMap<>();
+    private HashMap<String, Boolean> tff = new HashMap<>();
+    private HashMap<String, Boolean> ftt = new HashMap<>();
+    private HashMap<String, Boolean> ftf = new HashMap<>();
+    private HashMap<String, Boolean> fft = new HashMap<>();
+    private HashMap<String, Boolean> fff = new HashMap<>();
 
     @Before
-    public void setUp() throws Exception {}
+    public void setUp() throws Exception {
+        t.put("x0", true);
+        f.put("x0", false);
+
+        tt.putAll(t);
+        tt.put("x1", true);
+
+        tf.putAll(t);
+        tf.put("x1", false);
+
+        ft.putAll(f);
+        ft.put("x1", true);
+
+        ff.putAll(f);
+        ff.put("x1", false);
+
+        ttt.putAll(tt);
+        ttt.put("x2", true);
+
+        ttf.putAll(tt);
+        ttf.put("x2", false);
+
+        tft.putAll(tf);
+        tft.put("x2", true);
+
+        tff.putAll(tf);
+        tff.put("x2", false);
+
+        ftt.putAll(ft);
+        ftt.put("x2", true);
+
+        ftf.putAll(ft);
+        ftf.put("x2", false);
+
+        fft.putAll(ff);
+        fft.put("x2", false);
+
+        fff.putAll(ff);
+        fff.put("x2", false);
+    }
 
     @After
-    public void tearDown() throws Exception {}
+    public void tearDown() throws Exception {
+    }
 
     @Test
-    public void test_zmienna() {
-        assertEquals(true, x0.evaluate(true));
-        assertEquals(false, x0.evaluate(false));
+    public void test_variables_simple() {
+        assertEquals(true, x0.evaluate(t));
+        assertEquals(false, x0.evaluate(f));
         assertEquals("x0", x0.toString());
-        assertEquals(true, x1.evaluate(false, true));
-        assertEquals(false, x2.evaluate(true, true, false));
+        assertEquals(true, x1.evaluate(ft));
+        assertEquals(false, x2.evaluate(ttf));
     }
 
     @Test
     public void test_stale() {
-        assertEquals(true, t.evaluate());
-        assertEquals(true, t.evaluate(false, true));
-        assertEquals("T", t.toString());
+        assertEquals(true, T.evaluate(e));
+        assertEquals(true, T.evaluate(ft));
+        assertEquals("T", T.toString());
 
-        assertEquals(false, f.evaluate());
-        assertEquals(false, f.evaluate(true, false));
-        assertEquals("F", f.toString());
+        assertEquals(false, F.evaluate(e));
+        assertEquals(false, F.evaluate(tf));
+        assertEquals("F", F.toString());
     }
 
     @Test
     public void test_or() {
-        assertEquals(true, x0.or(t).evaluate(false));
-        assertEquals(true, x0.or(t).evaluate(true));
-        assertEquals("T", x0.or(t).toString());
-        assertEquals(true, t.or(x0).evaluate(false));
-        assertEquals(true, t.or(x0).evaluate(true));
-        assertEquals("T", t.or(x0).toString());
+        assertEquals(true, x0.or(T).evaluate(f));
+        assertEquals(true, x0.or(T).evaluate(t));
+        assertEquals("T", x0.or(T).toString());
+        assertEquals(true, T.or(x0).evaluate(f));
+        assertEquals(true, T.or(x0).evaluate(t));
+        assertEquals("T", T.or(x0).toString());
 
-        assertEquals(false, x0.or(f).evaluate(false));
-        assertEquals(true, x0.or(f).evaluate(true));
-        assertEquals("x0", x0.or(f).toString());
-        assertEquals(false, f.or(x0).evaluate(false));
-        assertEquals(true, f.or(x0).evaluate(true));
-        assertEquals("x0", f.or(x0).toString());
+        assertEquals(false, x0.or(F).evaluate(f));
+        assertEquals(true, x0.or(F).evaluate(t));
+        assertEquals("x0", x0.or(F).toString());
+        assertEquals(false, F.or(x0).evaluate(f));
+        assertEquals(true, F.or(x0).evaluate(t));
+        assertEquals("x0", F.or(x0).toString());
 
-        assertEquals(true, t.or(f).evaluate());
-        assertEquals(true, f.or(t).evaluate());
-        assertEquals("T", f.or(t).toString());
-        assertEquals("T", f.or(t).toString());
+        assertEquals(true, T.or(F).evaluate(e));
+        assertEquals(true, F.or(T).evaluate(e));
+        assertEquals("T", F.or(T).toString());
+        assertEquals("T", F.or(T).toString());
 
     }
 
     @Test
     public void test_and() {
-        assertEquals(true, x0.and(t).evaluate(true));
-        assertEquals(false, x0.and(t).evaluate(false));
-        assertEquals("x0", x0.and(t).toString());
-        assertEquals(true, t.and(x0).evaluate(true));
-        assertEquals(false, t.and(x0).evaluate(false));
-        assertEquals("x0", t.and(x0).toString());
+        assertEquals(true, x0.and(T).evaluate(t));
+        assertEquals(false, x0.and(T).evaluate(f));
+        assertEquals("x0", x0.and(T).toString());
+        assertEquals(true, T.and(x0).evaluate(t));
+        assertEquals(false, T.and(x0).evaluate(f));
+        assertEquals("x0", T.and(x0).toString());
 
-        assertEquals(false, x0.and(f).evaluate(true));
-        assertEquals(false, x0.and(f).evaluate(false));
-        assertEquals("F", x0.and(f).toString());
-        assertEquals(false, f.and(x0).evaluate(true));
-        assertEquals(false, f.and(x0).evaluate(false));
-        assertEquals("F", f.and(x0).toString());
+        assertEquals(false, x0.and(F).evaluate(t));
+        assertEquals(false, x0.and(F).evaluate(f));
+        assertEquals("F", x0.and(F).toString());
+        assertEquals(false, F.and(x0).evaluate(t));
+        assertEquals(false, F.and(x0).evaluate(f));
+        assertEquals("F", F.and(x0).toString());
 
-        assertEquals(false, t.and(f).evaluate());
-        assertEquals(false, f.and(t).evaluate());
-        assertEquals("F", t.and(f).toString());
-        assertEquals("F", f.and(t).toString());
+        assertEquals(false, T.and(F).evaluate(e));
+        assertEquals(false, F.and(T).evaluate(e));
+        assertEquals("F", T.and(F).toString());
+        assertEquals("F", F.and(T).toString());
     }
 
     @Test
     public void test_xor() {
-        assertEquals(false, x0.xor(t).evaluate(true));
-        assertEquals(true, x0.xor(t).evaluate(false));
-        assertEquals("x0^T", x0.xor(t).toString());
-        assertEquals(false, t.xor(x0).evaluate(true));
-        assertEquals(true, t.xor(x0).evaluate(false));
-        assertEquals("T^x0", t.xor(x0).toString());
+        assertEquals(false, x0.xor(T).evaluate(t));
+        assertEquals(true, x0.xor(T).evaluate(f));
+        assertEquals("x0^T", x0.xor(T).toString());
+        assertEquals(false, T.xor(x0).evaluate(t));
+        assertEquals(true, T.xor(x0).evaluate(f));
+        assertEquals("T^x0", T.xor(x0).toString());
 
-        assertEquals(true, x0.xor(f).evaluate(true));
-        assertEquals(false, x0.xor(f).evaluate(false));
-        assertEquals("x0^F", x0.xor(f).toString());
-        assertEquals(true, f.xor(x0).evaluate(true));
-        assertEquals(false, f.xor(x0).evaluate(false));
-        assertEquals("F^x0", f.xor(x0).toString());
+        assertEquals(true, x0.xor(F).evaluate(t));
+        assertEquals(false, x0.xor(F).evaluate(f));
+        assertEquals("x0^F", x0.xor(F).toString());
+        assertEquals(true, F.xor(x0).evaluate(t));
+        assertEquals(false, F.xor(x0).evaluate(f));
+        assertEquals("F^x0", F.xor(x0).toString());
 
-        assertEquals("F", f.xor(f).toString());
-        assertEquals(false, f.xor(f).evaluate());
-        assertEquals("F", t.xor(t).toString());
-        assertEquals(false, t.xor(t).evaluate());
-        assertEquals("T", t.xor(f).toString());
-        assertEquals("T", f.xor(t).toString());
+        assertEquals("F", F.xor(F).toString());
+        assertEquals(false, F.xor(F).evaluate(e));
+        assertEquals("F", T.xor(T).toString());
+        assertEquals(false, T.xor(T).evaluate(e));
+        assertEquals("T", T.xor(F).toString());
+        assertEquals("T", F.xor(T).toString());
 
 
-        assertEquals(true, t.xor(f).evaluate());
-        assertEquals(true, f.xor(t).evaluate());
-        assertEquals("T", t.xor(f).toString());
-        assertEquals("T", f.xor(t).toString());
+        assertEquals(true, T.xor(F).evaluate(e));
+        assertEquals(true, F.xor(T).evaluate(e));
+        assertEquals("T", T.xor(F).toString());
+        assertEquals("T", F.xor(T).toString());
     }
 
     @Test
     public void test_neg() {
-        assertEquals(false, x0.neg().evaluate(true));
-        assertEquals(true, x0.neg().evaluate(false));
+        assertEquals(false, x0.neg().evaluate(t));
+        assertEquals(true, x0.neg().evaluate(f));
         assertEquals("~x0", x0.neg().toString());
 
-        assertEquals(false, t.neg().evaluate());
-        assertEquals(true, f.neg().evaluate());
-        assertEquals("T", f.neg().toString());
-        assertEquals("F", t.neg().toString());
+        assertEquals(false, T.neg().evaluate(e));
+        assertEquals(true, F.neg().evaluate(e));
+        assertEquals("T", F.neg().toString());
+        assertEquals("F", T.neg().toString());
 
         assertEquals("x0", x0.neg().neg().toString());
     }
 
     @Test
-    public void test_proste_wyrazenia(){
+    public void test_simple_expressions() {
         Expression w1 = x0.or(x1);
         assertEquals("x0|x1", w1.toString());
-        assertEquals(true, w1.evaluate(true,false));
-        assertEquals(true, w1.evaluate(false,true));
-        assertEquals(false, w1.evaluate(false,false));
+        assertEquals(true, w1.evaluate(tf));
+        assertEquals(true, w1.evaluate(ft));
+        assertEquals(false, w1.evaluate(ff));
 
         Expression w2 = x0.xor(x1);
         assertEquals("x0^x1", w2.toString());
@@ -173,15 +232,15 @@ public class ExpressionTest {
     }
 
     @Test
-    public void test_priorytety(){
+    public void test_priorities() {
         Expression w1 = x0.or(x1);
         Expression w2 = w1.and(x2);
         assertEquals("(x0|x1)&x2", w2.toString());
 
-        assertEquals(true, w1.neg().evaluate(false, false));
-        assertEquals(false, w1.neg().evaluate(true, false));
-        assertEquals(false, w1.neg().evaluate(false, true));
-        assertEquals(false, w1.neg().evaluate(true, true));
+        assertEquals(true, w1.neg().evaluate(ff));
+        assertEquals(false, w1.neg().evaluate(tf));
+        assertEquals(false, w1.neg().evaluate(ft));
+        assertEquals(false, w1.neg().evaluate(tt));
         assertEquals("~(x0|x1)", w1.neg().toString());
 
 
@@ -191,11 +250,16 @@ public class ExpressionTest {
         assertEquals("x2^~x0", p2.toString());
         Expression w3 = p1.and(p2);
         assertEquals("(x2|~x1)&(x2^~x0)", w3.toString());
-        assertEquals(true, w3.evaluate(true, true, true));
-        assertEquals(false, w3.evaluate(false, true, true));
+        assertEquals(true, w3.evaluate(ttt));
+        assertEquals(false, w3.evaluate(ftt));
 
-        assertEquals(false, w3.neg().evaluate(true, true, true));
+        assertEquals(false, w3.neg().evaluate(ttt));
         assertEquals("~((x2|~x1)&(x2^~x0))", w3.neg().toString());
+    }
+
+    @Test
+    public void test_variables_names() {
+
     }
 
 }

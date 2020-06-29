@@ -1,5 +1,7 @@
 package logicalOperations;
 
+import java.util.HashMap;
+
 public class OperationOr extends Operation {
 
     public OperationOr(Expression left, Expression right) {
@@ -17,7 +19,7 @@ public class OperationOr extends Operation {
     }
 
     @Override
-    public boolean evaluate(boolean... values) {
+    public boolean evaluate(HashMap<String, Boolean> values) {
         return left.evaluate(values) || right.evaluate(values);
     }
 }

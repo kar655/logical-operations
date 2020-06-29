@@ -1,8 +1,11 @@
 package logicalOperations;
 
+import java.util.HashMap;
+
 public abstract class Expression {
 
-    public abstract boolean evaluate(boolean... values);
+    public abstract boolean evaluate(HashMap<String, Boolean> values)
+            throws VariableNoValue;
 
     public abstract String toString();
 

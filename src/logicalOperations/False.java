@@ -1,5 +1,7 @@
 package logicalOperations;
 
+import java.util.HashMap;
+
 public class False extends Expression {
 
     private static final False instance = new False();
@@ -13,7 +15,7 @@ public class False extends Expression {
     }
 
     @Override
-    public boolean evaluate(boolean... values) {
+    public boolean evaluate(HashMap<String, Boolean> values) {
         return false;
     }
 
