@@ -1,6 +1,5 @@
 package logicalOperations;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Variable extends Expression {
@@ -35,11 +34,6 @@ public class Variable extends Expression {
             throw new VariableNoValue();
 
         return values.get(name);
-    }
-
-    @Override
-    public boolean isTautology() {
-        return false;
     }
 
     @Override

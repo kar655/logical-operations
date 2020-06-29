@@ -262,4 +262,20 @@ public class ExpressionTest {
 
     }
 
+
+    @Test
+    public void test_tautology_simple() {
+        Expression w1 = x0.or(x0.neg());
+        assertEquals("x0|~x0", w1.toString());
+        assertEquals(true, w1.isTautology());
+
+        Expression w2 = x0.and(x0.neg());
+        assertEquals("x0&~x0", w2.toString());
+        assertEquals(false, w2.isTautology());
+    }
+
+    @Test
+    public void test_tautology() {
+
+    }
 }

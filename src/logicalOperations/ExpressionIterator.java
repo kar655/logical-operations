@@ -50,10 +50,11 @@ public class ExpressionIterator implements Iterator<HashMap<String, Boolean>> {
 
     @Override
     public HashMap<String, Boolean> next() {
-        currentState++;
         if (states == 1)
             return new HashMap<>();
-        else
-            return currentStates;
+        else if (currentState++ != 0)
+            nextState();
+
+        return currentStates;
     }
 }

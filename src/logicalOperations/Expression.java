@@ -1,5 +1,6 @@
 package logicalOperations;
 
+import java.security.spec.NamedParameterSpec;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,7 +13,13 @@ public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
     public abstract boolean evaluate(HashMap<String, Boolean> values)
             throws VariableNoValue;
 
-    public abstract boolean isTautology();
+    public boolean isTautology() {
+        for (HashMap<String, Boolean> state : this)
+            if (!evaluate(state))
+                return false;
+
+        return true;
+    }
 
     public abstract String toString();
 

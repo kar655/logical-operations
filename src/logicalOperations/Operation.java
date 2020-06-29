@@ -8,6 +8,9 @@ public abstract class Operation extends Expression {
     public Operation(Expression left, Expression right) {
         this.left = left;
         this.right = right;
+
+        usedVariables.addAll(left.usedVariables);
+        usedVariables.addAll(right.usedVariables);
     }
 
     protected abstract String operatorToString();
