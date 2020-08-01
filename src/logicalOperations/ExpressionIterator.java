@@ -4,14 +4,12 @@ import java.util.*;
 
 public class ExpressionIterator implements Iterator<HashMap<String, Boolean>> {
 
-    private HashSet<String> usedVariables;
     private HashMap<String, Boolean> currentStates = new HashMap<>();
     private Stack<StatePair> statePairs = new Stack<>();
     private final int states;
     private int currentState = 0;
 
     public ExpressionIterator(HashSet<String> usedVariables) {
-        this.usedVariables = usedVariables;
         states = (int) Math.pow(2, usedVariables.size());
 
         for (String name : usedVariables) {

@@ -276,6 +276,18 @@ public class ExpressionTest {
 
     @Test
     public void test_tautology() {
+        Expression pierce = x0.imply(x1).imply(x0).imply(x0);
 
+        //assertEquals("((x0->x1)->x0)->x0", pierce.toString());
+        assertEquals(true, pierce.isTautology());
+
+        Expression clavius = x0.imply(x0.neg()).imply(x0.neg());
+        assertEquals("x0->~x0->~x0", clavius.toString());
+        assertEquals(true, clavius.isTautology());
+
+        Expression e1 = x0.imply(x1.and(x2))
+                .imply((x0.imply(x1)).and(x0.imply(x2)));
+        assertEquals("x0->x1&x2->(x0->x1)&(x0->x2)", e1.toString());
+        assertEquals(true, e1.isTautology());
     }
 }

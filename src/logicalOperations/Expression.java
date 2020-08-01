@@ -63,6 +63,10 @@ public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
         return new OperationXor(expression, this);
     }
 
+    public Expression imply(Expression expression) {
+        return new Implication(this, expression);
+    }
+
     @Override
     public Iterator<HashMap<String, Boolean>> iterator() {
         return new ExpressionIterator(usedVariables);

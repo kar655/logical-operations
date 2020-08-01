@@ -4,7 +4,8 @@ public enum Priorities {
     EXPRESSION(1000),
     OR(10),
     XOR(50),
-    AND(100);
+    AND(100),
+    IMPLY(5);
     
     private final int priority;
     
