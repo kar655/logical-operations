@@ -15,7 +15,7 @@ public class OperationOr extends Operation {
 
     @Override
     protected String operatorToString() {
-        return "|";
+        return OperationSymbols.OR.getSymbol();
     }
 
     @Override

@@ -26,7 +26,7 @@ public class True extends Expression {
 
     @Override
     public String toString() {
-        return "T";
+        return OperationSymbols.TRU.getSymbol();
     }
 
     @Override

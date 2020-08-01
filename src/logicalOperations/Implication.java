@@ -15,7 +15,7 @@ public class Implication extends Operation {
 
     @Override
     protected String operatorToString() {
-        return "->";
+        return OperationSymbols.IMPLY.getSymbol();
     }
 
     @Override

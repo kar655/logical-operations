@@ -6,9 +6,10 @@ public enum Priorities {
     XOR(50),
     AND(100),
     IMPLY(5);
-    
+
     private final int priority;
-    
+
+
     Priorities(int priority) {
         this.priority = priority;
     }

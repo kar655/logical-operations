@@ -26,7 +26,7 @@ public class False extends Expression {
 
     @Override
     public String toString() {
-        return "F";
+        return OperationSymbols.FAL.getSymbol();
     }
 
     @Override

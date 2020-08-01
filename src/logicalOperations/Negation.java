@@ -28,9 +28,9 @@ public class Negation extends Expression {
     @Override
     public String toString() {
         if (expression.priority() == Priorities.EXPRESSION.getPriority())
-            return "~" + expression;
+            return OperationSymbols.NEG.getSymbol() + expression;
         else
-            return "~(" + expression + ")";
+            return OperationSymbols.NEG.getSymbol() + "(" + expression + ")";
     }
 
     @Override
