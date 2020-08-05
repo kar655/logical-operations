@@ -1,5 +1,8 @@
 package logicalOperations;
 
-public class VariableNotFound extends Exception {
+public class VariableNotFound extends Error {
 
+    public VariableNotFound(String message) {
+        super(message);
+    }
 }

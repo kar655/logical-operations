@@ -21,6 +21,14 @@ public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
         return true;
     }
 
+    public boolean isContradiction() {
+        for (HashMap<String, Boolean> state : this)
+            if (evaluate(state))
+                return false;
+
+        return true;
+    }
+
     public abstract String toString();
 
     protected int priority() {

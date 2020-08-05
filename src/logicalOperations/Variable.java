@@ -19,13 +19,6 @@ public class Variable extends Expression {
         return variables.get(name);
     }
 
-    /**
-     * czy nie lepsze byloby trzymanie tak jak wczesniej tylko
-     * dodac hashMape z (nazwa, id)
-     * NIE bo jak bede chcial dac i-tej wartosci true to tworze tablice o i elementach
-     * a to jest bez sensu dla duzych i
-     */
-
     @Override
     public boolean evaluate(HashMap<String, Boolean> values)
             throws VariableNoValue {

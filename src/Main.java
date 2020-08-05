@@ -13,6 +13,18 @@ import java.util.Scanner;
  * -----------------------------------------------------------
  * moze jakies when false i return HashMapz danym wartosciowaniem
  */
+
+
+/**
+ * moze jakas mozliwosc wlaczenia mocnego sprawdzania ze
+ * po dodawaniu czego kolwiek jest sprawdzane
+ * czy to jest tautologia / contradiction i zastepowanie T / F
+ */
+
+/**
+ *
+ */
+
 public class Main {
 
     public static void main(String[] args) {

@@ -1,8 +1,8 @@
 package logicalOperations;
 
+// todo binary / constant / unary symbol
 public enum OperationSymbols {
-    FAL("F"),
-    TRU("T"),
+
     NEG("~"),
     OR("|"),
     XOR("^"),
@@ -19,4 +19,64 @@ public enum OperationSymbols {
     public String getSymbol() {
         return symbol;
     }
+
+    public int getPriority() {
+        return Priorities.valueOf(this.name()).getPriority();
+    }
+
+    public static boolean isSymbol(String input) {
+        for (OperationSymbols symbol : values())
+            if (symbol.getSymbol().equals(input))
+                return true;
+
+        return false;
+    }
+
+    public static OperationSymbols getSymbol(String input) throws SymbolNotFound {
+        for (OperationSymbols symbol : values())
+            if (symbol.getSymbol().equals(input))
+                return symbol;
+
+
+        throw new SymbolNotFound("Can't parse symbol '" + input + "'");
+    }
+
+    public static Expression call(Expression e1, Expression e2, String function)
+            throws SymbolNotFound {
+        if (function.equals(NEG.getSymbol())) {
+            return e1.neg();
+        } else if (function.equals(OR.getSymbol())) {
+            return e1.or(e2);
+        } else if (function.equals(XOR.getSymbol())) {
+            return e1.xor(e2);
+        } else if (function.equals(AND.getSymbol())) {
+            return e1.and(e2);
+        } else if (function.equals(IMPLY.getSymbol())) {
+            return e1.imply(e2);
+        } else {
+            throw new SymbolNotFound(function);
+        }
+    }
+
+//    public Expression make(Expression e1, Expression e2, String instruction) {
+//        try {
+//
+//        }
+//    }
 }
+
+//public enum En {
+//    a("1"),
+//    b("2"),
+//    c("4");
+//
+//    private final String value;
+//
+//    En(String value) {
+//        this.value = value;
+//    }
+//
+//    public String  getValue() {
+//        return value;
+//    }
+//}
