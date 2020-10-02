@@ -3,6 +3,7 @@ package logicalOperations;
 public enum Priorities {
 
     EXPRESSION(1000),
+    NEG(500),
     OR(10),
     XOR(50),
     AND(100),

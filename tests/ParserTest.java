@@ -36,10 +36,10 @@ public class ParserTest {
     }
 
     @Test
-    public void test_expression_plus_tautology() {
-        Expression e1 = a.or(b);
-        Expression e2 = (a.or(b)).and(a.or(a.neg()));
-
-        assertEquals(true, e1.equals(e2));
+    public void test_negation() {
+        Expression expected = a.or(b.neg());
+        Expression result = parser.parseLine("a | ~ b");
+        assertEquals(expected.toString(), result.toString());
+        assertEquals(expected, result);
     }
 }

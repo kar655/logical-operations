@@ -29,21 +29,26 @@ public class Parser {
         Stack<OperationSymbols> symbols = new Stack<>();
 
         Expression temp;
+        boolean previousNegation = false;
 
 
         for (String instruction : instructions) {
-            if (OperationSymbols.isSymbol(instruction)) {
-
-                var x = OperationSymbols.getSymbol(instruction);
-
-                if (!symbols.isEmpty()
+            if (previousNegation) {
+                // TODO assuming high priority of negation
+                previousNegation = false;
+                expressions.push(Variable.give(instruction).neg());
+            }
+            else if (OperationSymbols.isSymbol(instruction)) {
+                if (instruction.equals(OperationSymbols.NEG.getSymbol())) {
+                    previousNegation = true;
+                } else if (!symbols.isEmpty()
                         && symbols.peek().getPriority()
                         > OperationSymbols.getSymbol(instruction).getPriority()) {
 
-                    // dobra kolejnosc?
+                    temp = expressions.pop();
                     expressions.push(OperationSymbols.call(
                             expressions.pop(),
-                            expressions.pop(),
+                            temp,
                             instruction));
                 } else {
                     symbols.push(OperationSymbols.getSymbol(instruction));
@@ -55,11 +60,21 @@ public class Parser {
             }
         }
 
+        if (previousNegation) {
+            System.out.println("ERROR expecting expression after negation");
+        }
+
         while (!symbols.isEmpty()) {
             temp = expressions.pop();
             expressions.push(OperationSymbols.call(expressions.pop(), temp,
                     symbols.pop().getSymbol()));
         }
+
+        System.out.println("Should be 1 == " + expressions.size());
+        System.out.println("Should be 0 == " + symbols.size());
+
+        if (expressions.size() != 1 || symbols.size() != 0)
+            System.out.println("Something went wrong!");
 
         System.out.println(expressions.peek()
                 + " tautology: "

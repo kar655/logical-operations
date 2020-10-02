@@ -302,4 +302,12 @@ public class ExpressionTest {
         assertEquals(true, e1.equals(x1.or(x0)));
         assertEquals(false, e1.equals(x0.and(x1)));
     }
+
+    @Test
+    public void test_equals_plus_tautology() {
+        Expression e1 = x0.or(x1);
+        Expression e2 = (x0.or(x1)).and(x0.or(x0.neg()));
+
+        assertEquals(true, e1.equals(e2));
+    }
 }

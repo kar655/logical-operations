@@ -8,6 +8,7 @@ public class Negation extends Expression {
 
     public Negation(Expression expression) {
         this.expression = expression;
+        this.usedVariables = expression.usedVariables;
     }
 
     @Override
