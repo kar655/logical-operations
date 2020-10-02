@@ -34,14 +34,13 @@ public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Expression))
             return false;
 
         Expression that = (Expression) o;
 
         if (!usedVariables.equals(that.usedVariables))
             return false;
-
 
         for (HashMap<String, Boolean> state : this)
             if (evaluate(state) != that.evaluate(state))

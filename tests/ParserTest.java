@@ -34,4 +34,12 @@ public class ParserTest {
         assertEquals(expected.toString(), result.toString());
         assertEquals(expected, result);
     }
+
+    @Test
+    public void test_expression_plus_tautology() {
+        Expression e1 = a.or(b);
+        Expression e2 = (a.or(b)).and(a.or(a.neg()));
+
+        assertEquals(true, e1.equals(e2));
+    }
 }
