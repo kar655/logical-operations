@@ -1,6 +1,7 @@
 package logicalOperations;
 
 public enum Priorities {
+
     EXPRESSION(1000),
     OR(10),
     XOR(50),

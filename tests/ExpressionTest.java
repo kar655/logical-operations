@@ -290,4 +290,16 @@ public class ExpressionTest {
         assertEquals("x0->x1&x2->(x0->x1)&(x0->x2)", e1.toString());
         assertEquals(true, e1.isTautology());
     }
+
+    @Test
+    public void test_equals() {
+        assertEquals(true, x0.equals(x0));
+        assertEquals(false, x0.equals(x1));
+        assertEquals(false, x0.equals(null));
+
+        Expression e1 = x0.or(x1);
+
+        assertEquals(true, e1.equals(x1.or(x0)));
+        assertEquals(false, e1.equals(x0.and(x1)));
+    }
 }

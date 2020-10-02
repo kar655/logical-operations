@@ -4,6 +4,7 @@ import java.security.spec.NamedParameterSpec;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 
 public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
 
@@ -24,6 +25,26 @@ public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
     public boolean isContradiction() {
         for (HashMap<String, Boolean> state : this)
             if (evaluate(state))
+                return false;
+
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Expression that = (Expression) o;
+
+        if (!usedVariables.equals(that.usedVariables))
+            return false;
+
+
+        for (HashMap<String, Boolean> state : this)
+            if (evaluate(state) != that.evaluate(state))
                 return false;
 
         return true;
