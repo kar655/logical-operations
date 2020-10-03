@@ -27,19 +27,33 @@ public class ParserTest {
         // TODO
     }
 
+    public void doubleCompare(Expression e1, Expression e2) {
+        assertEquals(e1.toString(), e2.toString());
+        assertEquals(e1, e2);
+    }
+
     @Test
     public void test_simple() {
         Expression expected = a.or(b.and(c));
         Expression result = parser.parseLine("a | b & c");
-        assertEquals(expected.toString(), result.toString());
-        assertEquals(expected, result);
+        doubleCompare(expected, result);
     }
 
     @Test
     public void test_negation() {
         Expression expected = a.or(b.neg());
         Expression result = parser.parseLine("a | ~ b");
-        assertEquals(expected.toString(), result.toString());
-        assertEquals(expected, result);
+        doubleCompare(expected, result);
+    }
+
+    @Test
+    public void test_parentheses() {
+        Expression expected = (a.or(b)).and(a.neg());
+        Expression result = parser.parseLine("( a | b ) & ~ a");
+        doubleCompare(expected, result);
+
+        expected = a.and(b).or(c);
+        result = parser.parseLine("( ( a & b ) | c )");
+        doubleCompare(expected, result);
     }
 }

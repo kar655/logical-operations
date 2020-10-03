@@ -35,13 +35,24 @@ public class Parser {
         for (String instruction : instructions) {
             if (previousNegation) {
                 // TODO assuming high priority of negation
+
+                // TODO TU MOZE BYC PRZECIEZ NAWIAS
                 previousNegation = false;
                 expressions.push(Variable.give(instruction).neg());
-            }
-            else if (OperationSymbols.isSymbol(instruction)) {
+            } else if (instruction.equals(")")) {
+                while (symbols.peek() != null) {
+                    temp = expressions.pop();
+                    expressions.push(OperationSymbols.call(
+                            expressions.pop(),
+                            temp,
+                            symbols.pop().getSymbol()));
+                }
+                symbols.pop();
+            } else if (OperationSymbols.isSymbol(instruction)) {
                 if (instruction.equals(OperationSymbols.NEG.getSymbol())) {
                     previousNegation = true;
                 } else if (!symbols.isEmpty()
+                        && symbols.peek() != null
                         && symbols.peek().getPriority()
                         > OperationSymbols.getSymbol(instruction).getPriority()) {
 
@@ -55,6 +66,8 @@ public class Parser {
                 }
             } else if (ConstantSymbol.isSymbol(instruction)) {
                 System.out.println("Read constant symbol " + instruction);
+            } else if (instruction.equals("(")) {
+                symbols.push(null);
             } else { // is expression
                 expressions.push(Variable.give(instruction));
             }
