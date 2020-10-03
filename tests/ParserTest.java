@@ -56,4 +56,15 @@ public class ParserTest {
         result = parser.parseLine("( ( a & b ) | c )");
         doubleCompare(expected, result);
     }
+
+    @Test
+    public void test_parentheses_neg() {
+        Expression expected = (a.and(b.neg())).neg().or(b);
+        Expression result = parser.parseLine("~ ( a & ~ b ) | b");
+        doubleCompare(expected, result);
+
+        expected = (a.or((b.and(c)).neg())).neg();
+        result = parser.parseLine("~ ( a | ( ~ ( b & c ) ) )");
+        doubleCompare(expected, result);
+    }
 }

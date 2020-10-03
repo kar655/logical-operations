@@ -4,6 +4,8 @@ import logicalOperations.*;
 
 import javax.swing.*;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Parser {
@@ -27,16 +29,18 @@ public class Parser {
 
         Stack<Expression> expressions = new Stack<>();
         Stack<OperationSymbols> symbols = new Stack<>();
+        LinkedList<Boolean> parenthesesNeg = new LinkedList<>();
 
         Expression temp;
         boolean previousNegation = false;
 
-
+        // TODO assuming high priority of negation
         for (String instruction : instructions) {
-            if (previousNegation) {
-                // TODO assuming high priority of negation
-
-                // TODO TU MOZE BYC PRZECIEZ NAWIAS
+            if (previousNegation && instruction.equals("(")) {
+                previousNegation = false;
+                symbols.push(null);
+                parenthesesNeg.push(true);
+            } else if (previousNegation) {
                 previousNegation = false;
                 expressions.push(Variable.give(instruction).neg());
             } else if (instruction.equals(")")) {
@@ -48,6 +52,10 @@ public class Parser {
                             symbols.pop().getSymbol()));
                 }
                 symbols.pop();
+
+                if (parenthesesNeg.pollLast())
+                    expressions.push(expressions.pop().neg());
+
             } else if (OperationSymbols.isSymbol(instruction)) {
                 if (instruction.equals(OperationSymbols.NEG.getSymbol())) {
                     previousNegation = true;
@@ -68,6 +76,7 @@ public class Parser {
                 System.out.println("Read constant symbol " + instruction);
             } else if (instruction.equals("(")) {
                 symbols.push(null);
+                parenthesesNeg.push(false);
             } else { // is expression
                 expressions.push(Variable.give(instruction));
             }
