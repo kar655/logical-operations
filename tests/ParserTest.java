@@ -3,7 +3,10 @@ import logicalOperations.Variable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import parsing.NegationError;
+import parsing.ParenthesesError;
 import parsing.Parser;
+import parsing.ParserError;
 
 import static org.junit.Assert.*;
 
@@ -66,5 +69,20 @@ public class ParserTest {
         expected = (a.or((b.and(c)).neg())).neg();
         result = parser.parseLine("~ ( a | ( ~ ( b & c ) ) )");
         doubleCompare(expected, result);
+    }
+
+    @Test(expected = NegationError.class)
+    public void test_negation_error() {
+        Expression e = parser.parseLine("a | ~");
+    }
+
+    @Test(expected = ParserError.class)
+    public void test_parentheses_error() {
+        parser.parseLine("a ( & b )");
+    }
+
+    @Test(expected = ParenthesesError.class)
+    public void test_checkParentheses() {
+        Expression e = parser.parseLine(") a (");
     }
 }
