@@ -9,7 +9,7 @@ public class Parser {
     private int line = 0;
 
     private void errorMessage() {
-        System.out.println("Error in line " + line);
+        System.err.println("Error in line " + line);
     }
 
     private boolean checkParentheses(String[] instructions) {
@@ -70,15 +70,7 @@ public class Parser {
         }
     }
 
-    public Expression parseLine(String string) throws VariableNotFound {
-        line++;
-
-        if (!string.matches("^[a-zA-Z0-9=|&>^ -~]*$")) {
-            System.err.println(
-                    "Input can only contain letters, numbers and '=' sign.");
-            return null;
-        }
-
+    public Expression parserHelper(String string) {
         String[] instructions = string.split("\\s+");
 
         if (!checkParentheses(instructions))
@@ -134,7 +126,7 @@ public class Parser {
                     symbols.push(OperationSymbols.getSymbol(instruction));
                 }
             } else if (ConstantSymbol.isSymbol(instruction)) {
-                System.out.println("Read constant symbol " + instruction);
+                System.out.println("Read constant symbol " + instruction); // TODO
             } else if (instruction.equals("(")) {
                 symbols.push(null);
                 parenthesesNeg.push(false);
@@ -143,20 +135,31 @@ public class Parser {
             }
         }
 
-        if (previousNegation) {
-            System.out.println("ERROR expecting expression after negation");
-        }
-
         while (!symbols.isEmpty() && expressions.size() >= 2) {
             temp = expressions.pop();
             expressions.push(OperationSymbols.call(expressions.pop(), temp,
                     symbols.pop().getSymbol()));
         }
 
-//        System.out.println(expressions.peek()
-//                + " tautology: "
-//                + expressions.peek().isTautology());
-
         return expressions.peek();
+    }
+
+    public void parseLine(String string) throws VariableNotFound {
+        line++;
+
+        if (!string.matches("^[a-zA-Z0-9=|&>^ -~]*$")) {
+            System.err.println(
+                    "Input can only contain letters, " +
+                            "numbers, operations and '=' sign.");
+            return;
+        }
+
+        Expression expression = parserHelper(string);
+
+        System.out.println(expression
+                + " tautology: "
+                + expression.isTautology());
+
+        // return expressions.peek();
     }
 }

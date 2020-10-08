@@ -38,51 +38,51 @@ public class ParserTest {
     @Test
     public void test_simple() {
         Expression expected = a.or(b.and(c));
-        Expression result = parser.parseLine("a | b & c");
+        Expression result = parser.parserHelper("a | b & c");
         doubleCompare(expected, result);
     }
 
     @Test
     public void test_negation() {
         Expression expected = a.or(b.neg());
-        Expression result = parser.parseLine("a | ~ b");
+        Expression result = parser.parserHelper("a | ~ b");
         doubleCompare(expected, result);
     }
 
     @Test
     public void test_parentheses() {
         Expression expected = (a.or(b)).and(a.neg());
-        Expression result = parser.parseLine("( a | b ) & ~ a");
+        Expression result = parser.parserHelper("( a | b ) & ~ a");
         doubleCompare(expected, result);
 
         expected = a.and(b).or(c);
-        result = parser.parseLine("( ( a & b ) | c )");
+        result = parser.parserHelper("( ( a & b ) | c )");
         doubleCompare(expected, result);
     }
 
     @Test
     public void test_parentheses_neg() {
         Expression expected = (a.and(b.neg())).neg().or(b);
-        Expression result = parser.parseLine("~ ( a & ~ b ) | b");
+        Expression result = parser.parserHelper("~ ( a & ~ b ) | b");
         doubleCompare(expected, result);
 
         expected = (a.or((b.and(c)).neg())).neg();
-        result = parser.parseLine("~ ( a | ( ~ ( b & c ) ) )");
+        result = parser.parserHelper("~ ( a | ( ~ ( b & c ) ) )");
         doubleCompare(expected, result);
     }
 
     @Test(expected = NegationError.class)
     public void test_negation_error() {
-        Expression e = parser.parseLine("a | ~");
+        Expression e = parser.parserHelper("a | ~");
     }
 
     @Test(expected = ParserError.class)
     public void test_parentheses_error() {
-        parser.parseLine("a ( & b )");
+        parser.parserHelper("a ( & b )");
     }
 
     @Test(expected = ParenthesesError.class)
     public void test_checkParentheses() {
-        Expression e = parser.parseLine(") a (");
+        Expression e = parser.parserHelper(") a (");
     }
 }
