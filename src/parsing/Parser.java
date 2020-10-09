@@ -67,7 +67,15 @@ public class Parser {
                                 && lineArguments.get(i + 1)
                                 != LineArguments.NEGATION)
                     throw new OperationError(string);
-            } // todo np 1 2 3 4 tylko 4
+            } else if (lineArguments.get(i) == LineArguments.VARIABLE) {
+                if (i > 0
+                        && (lineArguments.get(i - 1) == LineArguments.VARIABLE
+                        || lineArguments.get(i - 1) == LineArguments.PARENTHESES_CLOSED)
+                        || i < lineArguments.size() - 1
+                        && (lineArguments.get(i + 1) == LineArguments.VARIABLE
+                        || lineArguments.get(i + 1) == LineArguments.PARENTHESES_OPEN))
+                    throw new VariableError(string);
+            }
         }
     }
 

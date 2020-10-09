@@ -24,14 +24,16 @@ public class ParserTest {
     public void tearDown() throws Exception {
     }
 
-    @Test
-    public void test_whitespaces() {
-        // TODO
-    }
-
     public void doubleCompare(Expression e1, Expression e2) {
         assertEquals(e1.toString(), e2.toString());
         assertEquals(e1, e2);
+    }
+
+    @Test
+    public void test_whitespaces() {
+        Expression expected = a.or(b.neg().and(a.neg()));
+        Expression result = parser.parserHelper("a\t|     ( ~\nb & ~ a )");
+        doubleCompare(expected, result);
     }
 
     @Test
@@ -83,6 +85,11 @@ public class ParserTest {
     @Test(expected = ParenthesesError.class)
     public void test_checkParentheses() {
         Expression e = parser.parserHelper(") a (");
+    }
+
+    @Test(expected = VariableError.class)
+    public void test_variableError() {
+        Expression e = parser.parserHelper("q w");
     }
 
     @Test
