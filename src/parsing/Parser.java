@@ -144,6 +144,23 @@ public class Parser {
         return expressions.peek();
     }
 
+    public void printResult(Expression expression) {
+        if (Options.PARSED.isEnabled())
+            System.out.println("Expression: " + expression);
+
+        if (Options.TAUTOLOGY.isEnabled())
+            System.out.println("Is tautology: " + expression.isTautology());
+
+        if (Options.CONTRADICTION.isEnabled())
+            System.out.println("Is contradiction: " + expression.isContradiction());
+
+        if (Options.ALL_VALUES.isEnabled()) {
+            System.out.println("All states:");
+            for (HashMap<String, Boolean> state : expression)
+                System.out.println("\t" + state + "\tresult: " + expression.evaluate(state));
+        }
+    }
+
     public void parseLine(String string) throws VariableNotFound {
         line++;
 
@@ -156,10 +173,6 @@ public class Parser {
 
         Expression expression = parserHelper(string);
 
-        System.out.println(expression
-                + " tautology: "
-                + expression.isTautology());
-
-        // return expressions.peek();
+        printResult(expression);
     }
 }
