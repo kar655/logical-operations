@@ -1,12 +1,11 @@
 import logicalOperations.Expression;
+import logicalOperations.False;
+import logicalOperations.True;
 import logicalOperations.Variable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import parsing.NegationError;
-import parsing.ParenthesesError;
-import parsing.Parser;
-import parsing.ParserError;
+import parsing.*;
 
 import static org.junit.Assert.*;
 
@@ -84,5 +83,30 @@ public class ParserTest {
     @Test(expected = ParenthesesError.class)
     public void test_checkParentheses() {
         Expression e = parser.parserHelper(") a (");
+    }
+
+    @Test
+    public void test_trueRead() {
+        Expression result = parser.parserHelper("a | T");
+        doubleCompare(result, True.getInstance());
+    }
+
+    @Test
+    public void test_falseRead() {
+        Expression result = parser.parserHelper("a & F");
+        doubleCompare(result, False.getInstance());
+    }
+
+    @Test(expected = ParsingElementsError.class)
+    public void test_nullLastExpression() {
+        Expression e = parser.parserHelper("a & _");
+    }
+
+    @Test
+    public void test_lastExpressionSimple() {
+        Expression e = parser.parserHelper("a");
+        doubleCompare(e, a);
+        e = parser.parserHelper("_ | ~ _");
+        doubleCompare(e, a.or(a.neg()));
     }
 }

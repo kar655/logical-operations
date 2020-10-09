@@ -25,6 +25,11 @@ public class True extends Expression {
     }
 
     @Override
+    public boolean isContradiction() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return ConstantSymbol.TRU.getSymbol();
     }

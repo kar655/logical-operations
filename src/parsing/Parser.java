@@ -7,6 +7,7 @@ import java.util.*;
 public class Parser {
 
     private int line = 0;
+    private Expression lastExpression = null;
 
     private void errorMessage() {
         System.err.println("Error in line " + line);
@@ -66,7 +67,7 @@ public class Parser {
                                 && lineArguments.get(i + 1)
                                 != LineArguments.NEGATION)
                     throw new OperationError(string);
-            }
+            } // todo np 1 2 3 4 tylko 4
         }
     }
 
@@ -78,7 +79,7 @@ public class Parser {
 
         Stack<Expression> expressions = new Stack<>();
         Stack<OperationSymbols> symbols = new Stack<>();
-        LinkedList<Boolean> parenthesesNeg = new LinkedList<>();
+        LinkedList<Boolean> parenthesesNeg = new LinkedList<>(); // todo nie lepiej stack??
         ArrayList<LineArguments> lineArguments = new ArrayList<>();
 
         parseLineArguments(instructions, lineArguments);
@@ -95,7 +96,10 @@ public class Parser {
                 parenthesesNeg.push(true);
             } else if (previousNegation) {
                 previousNegation = false;
-                expressions.push(Variable.give(instruction).neg());
+                if (instruction.equals("_"))
+                    expressions.push(lastExpression.neg());
+                else
+                    expressions.push(Variable.give(instruction).neg());
             } else if (instruction.equals(")")) {
                 while (symbols.peek() != null) {
                     temp = expressions.pop();
@@ -126,10 +130,18 @@ public class Parser {
                     symbols.push(OperationSymbols.getSymbol(instruction));
                 }
             } else if (ConstantSymbol.isSymbol(instruction)) {
-                System.out.println("Read constant symbol " + instruction); // TODO
+                if (ConstantSymbol.FAL.getSymbol().equals(instruction))
+                    expressions.push(False.getInstance());
+                else
+                    expressions.push(True.getInstance());
             } else if (instruction.equals("(")) {
                 symbols.push(null);
                 parenthesesNeg.push(false);
+            } else if (instruction.equals("_")) {
+                if (lastExpression == null)
+                    throw new ParsingElementsError(string);
+                else
+                    expressions.push(lastExpression);
             } else { // is expression
                 expressions.push(Variable.give(instruction));
             }
@@ -141,6 +153,7 @@ public class Parser {
                     symbols.pop().getSymbol()));
         }
 
+        lastExpression = expressions.peek();
         return expressions.peek();
     }
 
@@ -157,7 +170,8 @@ public class Parser {
         if (Options.ALL_VALUES.isEnabled()) {
             System.out.println("All states:");
             for (HashMap<String, Boolean> state : expression)
-                System.out.println("\t" + state + "\tresult: " + expression.evaluate(state));
+                System.out.println("\t" + state
+                        + "\tresult: " + expression.evaluate(state));
         }
     }
 
@@ -172,7 +186,6 @@ public class Parser {
         }
 
         Expression expression = parserHelper(string);
-
         printResult(expression);
     }
 }
