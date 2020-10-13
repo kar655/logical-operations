@@ -8,7 +8,7 @@ public enum OperationSymbols {
     AND("&"),
     IMPLY("->");
 
-    private final String symbol;
+    private String symbol;
 
 
     OperationSymbols(String symbol) {
@@ -37,6 +37,10 @@ public enum OperationSymbols {
                 return symbol;
 
         throw new SymbolNotFound("Can't parse symbol '" + input + "'");
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public static Expression call(Expression e1, Expression e2, String function)

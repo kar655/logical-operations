@@ -186,9 +186,33 @@ public class Parser {
     private void getHelp() {
         System.out.println("Type in expression using operators");
         OperationSymbols.getInformation();
-//        System.out.println("To change operation symbols write !symbols");
+        System.out.println("To change operation symbols write !symbols");
         System.out.println("To change things printed write !options");
         System.out.println("To see this message write !help\n");
+    }
+
+    private void changeSymbols(String string) {
+        String[] instructions = string.split("\\s+");
+
+        if (instructions.length != 3) {
+            System.err.println("ERROR wrong number of arguments for !symbols");
+            System.out.println("usage: !symbols operation_name new_symbol");
+            return;
+        }
+
+        if (OperationSymbols.isSymbol(instructions[2])) {
+            System.err.println("ERROR symbol '"
+                    + instructions[2] + "' is already in use");
+            return;
+        }
+
+        try {
+            OperationSymbols.valueOf(instructions[1].toUpperCase()).setSymbol(instructions[2]);
+            System.out.println("Changed completed successfully!");
+        } catch (IllegalArgumentException e) {
+            System.err.println("ERROR there is no option called '"
+                    + instructions[1].toUpperCase() + "'");
+        }
     }
 
     private void changeOption(String string) {
@@ -235,6 +259,17 @@ public class Parser {
 
         if (string.startsWith("!options ")) {
             changeOption(string);
+            return;
+        }
+
+        if (string.equals("!symbols")) {
+            OperationSymbols.getInformation();
+            System.out.println("usage: !symbols operation_name new_symbol");
+            return;
+        }
+
+        if (string.startsWith("!symbols ")) {
+            changeSymbols(string);
             return;
         }
 
