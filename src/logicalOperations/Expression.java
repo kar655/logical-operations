@@ -1,10 +1,8 @@
 package logicalOperations;
 
-import java.security.spec.NamedParameterSpec;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Objects;
 
 public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
 

@@ -9,30 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Map;
-
-/**
- * Polecenie:
- * zaimplementuj projekt dotyczący Wyrażeń logicznych zawierający następujace klasy:
- * <p>
- * Wyrazenie
- * public boolean wartosc(boolean... wartosciowanie_zmiennych
- * wyliczba wartość wyrażanie, przy założeniu, że:
- * x_0 := wartosciowanie_zmiennych[0]
- * x_1 := wartosciowanie_zmiennych[1]
- * ...
- * public String toString()
- * public Wyrazenie neg()
- * public Wyrazenie and(Wyrazenie arg)
- * public Wyrazenie or(Wyrazenie arg)
- * public Wyrazenie xor(Wyrazenie arg)
- * True
- * public static True daj()
- * False
- * public static False daj()
- * Zmienna
- * public static Zmienna daj(int i) -> generuje zmienną x_i
- */
 
 
 public class ExpressionTest {

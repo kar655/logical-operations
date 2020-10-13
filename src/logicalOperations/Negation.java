@@ -16,16 +16,6 @@ public class Negation extends Expression {
         return !expression.evaluate(values);
     }
 
-//    @Override
-//    public boolean isTautology() {
-//        for (HashMap<String, Boolean> state : this) {
-//            if (evaluate(state))
-//                return false;
-//        }
-//
-//        return true;
-//    }
-
     @Override
     public String toString() {
         if (expression.priority() == Priorities.EXPRESSION.getPriority())

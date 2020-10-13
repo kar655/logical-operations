@@ -116,4 +116,10 @@ public class ParserTest {
         e = parser.parserHelper("_ | ~ _");
         doubleCompare(e, a.or(a.neg()));
     }
+
+    @Test
+    public void test_multiParenthesesNegation() {
+        Expression result = parser.parserHelper("~ ( ( ~ ( a ) ) )");
+        doubleCompare(result, a);
+    }
 }

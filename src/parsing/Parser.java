@@ -87,7 +87,7 @@ public class Parser {
 
         Stack<Expression> expressions = new Stack<>();
         Stack<OperationSymbols> symbols = new Stack<>();
-        LinkedList<Boolean> parenthesesNeg = new LinkedList<>(); // todo nie lepiej stack??
+        Stack<Boolean> parenthesesNeg = new Stack<>();
         ArrayList<LineArguments> lineArguments = new ArrayList<>();
 
         parseLineArguments(instructions, lineArguments);
@@ -96,7 +96,7 @@ public class Parser {
         Expression temp;
         boolean previousNegation = false;
 
-        // TODO assuming high priority of negation
+        // assuming high priority of negation
         for (String instruction : instructions) {
             if (previousNegation && instruction.equals("(")) {
                 previousNegation = false;
@@ -118,7 +118,7 @@ public class Parser {
                 }
                 symbols.pop();
 
-                if (parenthesesNeg.pollLast())
+                if (parenthesesNeg.pop())
                     expressions.push(expressions.pop().neg());
 
             } else if (OperationSymbols.isSymbol(instruction)) {

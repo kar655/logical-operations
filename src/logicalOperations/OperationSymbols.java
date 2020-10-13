@@ -1,6 +1,5 @@
 package logicalOperations;
 
-// todo binary / constant / unary symbol
 public enum OperationSymbols {
 
     NEG("~"),
@@ -37,7 +36,6 @@ public enum OperationSymbols {
             if (symbol.getSymbol().equals(input))
                 return symbol;
 
-
         throw new SymbolNotFound("Can't parse symbol '" + input + "'");
     }
 
@@ -57,26 +55,4 @@ public enum OperationSymbols {
             throw new SymbolNotFound(function);
         }
     }
-
-//    public Expression make(Expression e1, Expression e2, String instruction) {
-//        try {
-//
-//        }
-//    }
 }
-
-//public enum En {
-//    a("1"),
-//    b("2"),
-//    c("4");
-//
-//    private final String value;
-//
-//    En(String value) {
-//        this.value = value;
-//    }
-//
-//    public String  getValue() {
-//        return value;
-//    }
-//}
