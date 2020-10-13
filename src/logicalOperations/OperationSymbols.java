@@ -55,4 +55,10 @@ public enum OperationSymbols {
             throw new SymbolNotFound(function);
         }
     }
+
+    public static void getInformation() {
+        for (OperationSymbols symbol : values())
+            System.out.println(symbol.name()
+                    + " symbol is " + symbol.getSymbol());
+    }
 }

@@ -183,8 +183,60 @@ public class Parser {
         }
     }
 
+    private void getHelp() {
+        System.out.println("Type in expression using operators");
+        OperationSymbols.getInformation();
+//        System.out.println("To change operation symbols write !symbols");
+        System.out.println("To change things printed write !options");
+        System.out.println("To see this message write !help\n");
+    }
+
+    private void changeOption(String string) {
+        String[] instructions = string.split("\\s+");
+
+        if (instructions.length != 3) {
+            System.err.println("ERROR wrong number of arguments for !options");
+            return;
+        }
+
+        boolean enabled;
+        if (instructions[2].equals("True") || instructions[2].equals("true")
+                || instructions[2].equals("T") || instructions[2].equals("t"))
+            enabled = true;
+        else if (instructions[2].equals("False") || instructions[2].equals("false")
+                || instructions[2].equals("F") || instructions[2].equals("f"))
+            enabled = false;
+        else {
+            System.err.println("ERROR wrong new value '" + instructions[2] + "'");
+            return;
+        }
+
+        try {
+            Options.valueOf(instructions[1].toUpperCase()).setEnabled(enabled);
+            System.out.println("Changed completed successfully!");
+        } catch (IllegalArgumentException e) {
+            System.err.println("ERROR there is no option called '"
+                    + instructions[1].toUpperCase() + "'");
+        }
+    }
+
     public void parseLine(String string) throws VariableNotFound {
         line++;
+
+        if (string.equals("!help")) {
+            getHelp();
+            return;
+        }
+
+        if (string.equals("!options")) {
+            Options.printAllOptions();
+            return;
+        }
+
+        if (string.startsWith("!options ")) {
+            changeOption(string);
+            return;
+        }
 
         if (!string.matches("^[a-zA-Z0-9=|&>^ -~]*$")) {
             System.err.println(

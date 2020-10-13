@@ -19,4 +19,12 @@ public enum Options {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public static void printAllOptions() {
+        for (Options option : values())
+            System.out.println(option + " is set to " + option.isEnabled());
+
+        System.out.println("To change any option just write: " +
+                "'!options option_name new_value'");
+    }
 }
