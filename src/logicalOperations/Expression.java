@@ -93,6 +93,10 @@ public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
         return new Implication(this, expression);
     }
 
+    public Expression equiv(Expression expression) {
+        return new Equivalence(this, expression);
+    }
+
     @Override
     public Iterator<HashMap<String, Boolean>> iterator() {
         return new ExpressionIterator(usedVariables);

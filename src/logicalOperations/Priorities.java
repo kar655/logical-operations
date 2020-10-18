@@ -7,7 +7,8 @@ public enum Priorities {
     OR(10),
     XOR(50),
     AND(100),
-    IMPLY(5);
+    IMPLY(5),
+    EQUIV(1);
 
     private final int priority;
 

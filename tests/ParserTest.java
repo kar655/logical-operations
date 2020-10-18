@@ -129,4 +129,11 @@ public class ParserTest {
         Expression expected = a.or(b).imply(c);
         doubleCompare(result, expected);
     }
+
+    @Test
+    public void test_equiv() {
+        Expression result = parser.parserHelper("a <-> b");
+        Expression expected = a.equiv(b);
+        doubleCompare(result, expected);
+    }
 }

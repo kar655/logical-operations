@@ -6,7 +6,8 @@ public enum OperationSymbols {
     OR("|"),
     XOR("^"),
     AND("&"),
-    IMPLY("->");
+    IMPLY("->"),
+    EQUIV("<->");
 
     private String symbol;
 
@@ -55,6 +56,8 @@ public enum OperationSymbols {
             return e1.and(e2);
         } else if (function.equals(IMPLY.getSymbol())) {
             return e1.imply(e2);
+        } else if (function.equals(EQUIV.getSymbol())) {
+            return e1.equiv(e2);
         } else {
             throw new SymbolNotFound(function);
         }
