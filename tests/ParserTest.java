@@ -136,4 +136,26 @@ public class ParserTest {
         Expression expected = a.equiv(b);
         doubleCompare(result, expected);
     }
+
+    @Test
+    public void test_hardFolding() {
+        Options.HARD_FOLDING.setEnabled(true);
+
+        Expression result = parser.parserHelper("a | ~ a");
+        doubleCompare(True.getInstance(), result);
+
+        result = parser.parserHelper("~ ( a | ~ a )");
+        doubleCompare(False.getInstance(), result);
+    }
+
+    @Test
+    public void test_hardFoldingConstants() {
+        Options.HARD_FOLDING.setEnabled(true);
+
+        Expression result = parser.parserHelper("~ T");
+        doubleCompare(False.getInstance(), result);
+
+        result = parser.parserHelper("~ F");
+        doubleCompare(True.getInstance(), result);
+    }
 }

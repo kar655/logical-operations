@@ -21,4 +21,13 @@ public enum ConstantSymbol {
 
         return false;
     }
+
+    public static Expression getExpression(String symbol) {
+        if (FAL.getSymbol().equals(symbol))
+            return False.getInstance();
+        else if (TRU.getSymbol().equals(symbol))
+            return True.getInstance();
+        else
+            throw new SymbolNotFound(symbol);
+    }
 }

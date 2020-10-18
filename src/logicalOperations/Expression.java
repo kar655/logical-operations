@@ -12,6 +12,15 @@ public abstract class Expression implements Iterable<HashMap<String, Boolean>> {
     public abstract boolean evaluate(HashMap<String, Boolean> values)
             throws VariableNoValue;
 
+    public Expression fold() {
+        if (this.isTautology())
+            return True.getInstance();
+        else if (this.isContradiction())
+            return False.getInstance();
+        else
+            return this;
+    }
+
     public boolean isTautology() {
         for (HashMap<String, Boolean> state : this)
             if (!evaluate(state))

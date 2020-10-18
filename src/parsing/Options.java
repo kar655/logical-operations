@@ -4,7 +4,8 @@ public enum Options {
     PARSED(true),
     TAUTOLOGY(true),
     CONTRADICTION(true),
-    ALL_VALUES(false);
+    ALL_VALUES(false),
+    HARD_FOLDING(false);
 
     private boolean enabled;
 

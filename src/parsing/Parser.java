@@ -106,6 +106,9 @@ public class Parser {
                 previousNegation = false;
                 if (instruction.equals("_"))
                     expressions.push(lastExpression.neg());
+                else if (ConstantSymbol.isSymbol(instruction))
+                    expressions.push(
+                            ConstantSymbol.getExpression(instruction).neg());
                 else
                     expressions.push(Variable.give(instruction).neg());
             } else if (instruction.equals(")")) {
@@ -164,7 +167,10 @@ public class Parser {
         }
 
         lastExpression = expressions.peek();
-        return expressions.peek();
+        if (Options.HARD_FOLDING.isEnabled())
+            lastExpression = lastExpression.fold();
+
+        return lastExpression;
     }
 
     public void printResult(Expression expression) {

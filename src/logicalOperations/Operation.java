@@ -16,6 +16,14 @@ public abstract class Operation extends Expression {
     protected abstract String operatorToString();
 
     @Override
+    public Expression fold() {
+        left = left.fold();
+        right = right.fold();
+
+        return super.fold();
+    }
+
+    @Override
     public String toString() {
         String leftStr, rightStr;
 
