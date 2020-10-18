@@ -122,4 +122,11 @@ public class ParserTest {
         Expression result = parser.parserHelper("~ ( ( ~ ( a ) ) )");
         doubleCompare(result, a);
     }
+
+    @Test
+    public void test_imply() {
+        Expression result = parser.parserHelper("a | b -> c");
+        Expression expected = a.or(b).imply(c);
+        doubleCompare(result, expected);
+    }
 }

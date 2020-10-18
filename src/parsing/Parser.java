@@ -133,7 +133,9 @@ public class Parser {
                     expressions.push(OperationSymbols.call(
                             expressions.pop(),
                             temp,
-                            instruction));
+                            symbols.pop().getSymbol()));
+
+                    symbols.push(OperationSymbols.getSymbol(instruction));
                 } else {
                     symbols.push(OperationSymbols.getSymbol(instruction));
                 }
@@ -264,7 +266,7 @@ public class Parser {
 
         if (string.equals("!symbols")) {
             OperationSymbols.getInformation();
-            System.out.println("usage: !symbols operation_name new_symbol");
+            System.out.println("usage: !symbols operation_name new_symbol\n");
             return;
         }
 

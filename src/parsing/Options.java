@@ -25,6 +25,6 @@ public enum Options {
             System.out.println(option + " is set to " + option.isEnabled());
 
         System.out.println("To change any option just write: " +
-                "'!options option_name new_value'");
+                "!options option_name new_value\n");
     }
 }
