@@ -286,4 +286,10 @@ public class ExpressionTest {
 
         assertEquals(true, e1.equals(e2));
     }
+
+    @Test
+    public void test_equiv() {
+        assertEquals(true, x0.equiv(x0).isTautology());
+        assertEquals(false, x0.equiv(x1).isTautology());
+    }
 }
